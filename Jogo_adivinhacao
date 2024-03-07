@@ -1,0 +1,149 @@
+// C Code
+// Meu Primeiro projeto...
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#ifdef _WIN32
+#define CLEAR_SCREEN "cls"
+#else
+#define CLEAR_SCREEN "clear"
+#endif //limpa a tela após cada fase
+
+int main() {
+  srand(time(0));
+  int fase = 1;
+  int tentativasMaximas = 5;
+  int limiteSuperior = 0;
+  int JogarNovamente= 1;
+    
+  int dificuldade;
+
+  printf("Selecione a dificuldade:");
+  printf("\n1- Insano \n2- Dificil \n3- Médio \n4- Fácil \n5- Noob\n");
+   printf("Escolha o nivel de dificuldade: ");
+  scanf("%d", &dificuldade);
+
+  switch(dificuldade){
+
+    case 1:
+    tentativasMaximas= 1;
+    break;
+
+    case 2:
+    tentativasMaximas= 2;
+    break;
+
+    case 3:
+    tentativasMaximas= 3;
+    break;
+
+    case 4:
+    tentativasMaximas= 4;
+    break;
+    
+    case 5:
+    tentativasMaximas= 5;
+    break;
+   
+    default:
+      printf("Dados inválidos! ");
+      return 0;
+  }
+  system(CLEAR_SCREEN);
+  
+  while (fase <= 5) {  // Define o número de fases desejado;
+
+    int numerosecreto;
+    switch (fase) { //após acertar ou errar o numero secreto ele entra no switch e seleciona a próxima fase;
+      case 1:
+        limiteSuperior = 20;
+        break;
+      case 2:
+        limiteSuperior = 40;
+        break;
+      case 3:
+        limiteSuperior = 60;
+        break;
+      case 4:
+        limiteSuperior = 80;
+        break;
+      case 5:
+        limiteSuperior = 100;
+        break;
+
+      
+    }
+    
+    numerosecreto = rand() % limiteSuperior + 1; // gerar um número aleatório que será o "número secreto";
+
+    int chute = 0;
+    int tentativas = 1;
+
+    printf("\n===== Fase %d =====\n", fase);
+
+    do {
+      printf("Digite um número inteiro de 1 a %d: ", limiteSuperior);
+      scanf("%d", &chute);
+
+      if (chute < 1 || chute > limiteSuperior) {
+        printf("Número inválido. Digite um número entre 1 e %d.\n", limiteSuperior);
+        continue;  // Volta para o início do loop sem contar a tentativa inválida
+      }
+
+      if (numerosecreto == chute) {
+        printf("\nParabéns, você acertou!\n");
+        break;
+      } else {
+        if (numerosecreto > chute) {
+          printf("Errou!\n");
+          printf("Seu chute foi menor!\n");
+        } else {
+          printf("Errou!\n");
+          printf("Seu chute foi maior!\n");
+        }
+      }
+
+      tentativas++;
+
+    } while (tentativas <= tentativasMaximas); //quando se torna falso o jogo encerra;
+
+    if (tentativas > tentativasMaximas) {
+      printf("\nVocê excedeu o número máximo de tentativas.\n");
+      printf("O número secreto era: %d\n", numerosecreto);
+      break;
+    }
+
+    fase++;
+
+    printf("\nPressione Enter para continuar...");
+    getchar();
+    getchar();
+    system(CLEAR_SCREEN); //limpar tela após cada fase
+  }
+
+  printf("\nFim do jogo!\n");
+  printf("\nDeseja Jogar novamente?");
+  printf("\n1- Sim \n2- Não\n");
+  scanf("%d", &JogarNovamente);
+  switch(JogarNovamente){
+    case 1:
+    printf("você escolheu continuar!\n") ; 
+    return main();
+
+    case 2:
+    break;
+
+    default:
+    printf("Valor invalido! encerrando jogo!");
+    break;
+    
+  }
+  
+
+  return 0;
+}
+  
+
+
